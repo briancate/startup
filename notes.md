@@ -22,3 +22,7 @@ Interesting things I have learned about HTML
 ## React
 
 Interesting things I have learned about React
+
+I am told that apparently, I like web programming. I wasn't given much of a choice.
+
+Adding this to hopefully be able to push the commit. Man I hate setting these things up.
