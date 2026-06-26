@@ -33,13 +33,13 @@ sequenceDiagram
 - Secure login through HTTPS
 - Ability to create and join lobbies
 - Shuffling and dealing cards
-- Bidding to start the game
+- Bidding to start the round
 - Tracking and displaying the trump suit for the given game after bidding
-- Keeping track of who starts each trick (winner of the bid for the first round, winner of previous trick for each subsequent trick)
+- Keeping track of who starts each trick (winner of the bid for the first trick, winner of previous trick for each subsequent trick)
 - Showing and enforcing which cards are valid to play (must be the leading suit (if the player has it), the trump suit (if the player doesn't and has cards in the trump suit), or any card (if the player has neither))
 - Calculating which card wins the trick
-- Keeping score (how many tricks each team has won), and calculating points won at the end of the game
-- Ability to check the trick from the previous round
+- Keeping score (how many tricks each team has won), and calculating points won at the end of the round
+- Ability to see cards from the previous trick
 - Login info, game data, and user statistics persistently stored in a database
 
 ### Technologies
