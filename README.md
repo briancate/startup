@@ -46,7 +46,7 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - 3 HTML pages (login, joining a lobby, and gameplay)
+- **HTML** - 3 HTML pages (login, joining a lobby, and gameplay), general structure (such as the current trick being displayed in the center, players on the sides, room for the player's hand, trump suit displayed in a corner, etc)
 - **CSS** - ability of the application to resize to different screen sizes, animations of playing a card, the cards themselves, etc
 - **React** - ability to check the cards of the last trick, displaying the lobby after login and gameplay after joining a lobby, backend endpoint calls (like login and updating the game state), the ability to switch out cards with the kitty if you win the bid, etc
 - **Service** - endpoints for registering, login, logout, joining a lobby, leaving a lobby, playing a card, etc. For third party, I'll display the weather from Weatherstack
