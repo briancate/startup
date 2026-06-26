@@ -1,5 +1,4 @@
-# Your startup name here
-Summon the Dragon
+# Summon the Dragon
 
 [My Notes](notes.md)
 
