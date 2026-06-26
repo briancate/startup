@@ -35,13 +35,12 @@ sequenceDiagram
 - Shuffling and dealing cards
 - Bidding to start the game
 - Tracking and displaying the trump suit for the given game after bidding
-- Keeping track of who starts each round (winner of the bid for the first round, winner of previous round for each subsequent round)
-- Showing which cards are valid to play and enforcing that (the leading suit (if the player has it), the trump suit (if the player doesn't), or any card (if the player has neither))
-- Calculating which card wings the trick
-- Keeping score (how many tricks each team has won)
+- Keeping track of who starts each trick (winner of the bid for the first round, winner of previous trick for each subsequent trick)
+- Showing and enforcing which cards are valid to play (must be the leading suit (if the player has it), the trump suit (if the player doesn't and has cards in the trump suit), or any card (if the player has neither))
+- Calculating which card wins the trick
+- Keeping score (how many tricks each team has won), and calculating points won at the end of the game
 - Ability to check the trick from the previous round
-- Login info and game data persistently stored in a database
-
+- Login info, game data, and user statistics persistently stored in a database
 
 ### Technologies
 
