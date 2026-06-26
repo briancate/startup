@@ -2,7 +2,7 @@
 
 [My Notes](notes.md)
 
-A brief description of the application here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+I'm going to create a web app capable of hosting and playing games of "Summon the Dragon", a trick-taking card game similar to Hearts created by my high school statistics teacher. It'll allow users to register and sign in, create and join lobbies, and play the game. The app will also keep track of user statistics (how often the players wins vs loses, average points per game, etc).
 
 > [!NOTE]
 > This is a template for your startup application. You must modify this `README.md` file for each phase of your development. You only need to fill in the section for each deliverable when that deliverable is submitted in Canvas. Without completing the section for a deliverable, the TA will not know what to look for when grading your submission. Feel free to add additional information to each deliverable description, but make sure you at least have the list of rubric items and a description of what you did for each item.
@@ -12,7 +12,7 @@ A brief description of the application here. Lorem ipsum dolor sit amet, consect
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Want to learn a fun new card game? Enjoy trick-taking games, but hate keeping track of all the rules? The Summon the Dragon application is a perfect match for you! Learn an engaging new take on trick-taking card games with unique mechanics and strategies, while the application does all the work for you! Enjoy the ability to focus on the game as the computer keeps track of whose turn it is, which cards you can play, and the score.
 
 ### Design
 
@@ -29,20 +29,29 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Secure login through HTTPS
+- Ability to create and join lobbies
+- Shuffling and dealing cards
+- Bidding to start the game
+- Tracking and displaying the trump suit for the given game after bidding
+- Keeping track of who starts each round (winner of the bid for the first round, winner of previous round for each subsequent round)
+- Showing which cards are valid to play and enforcing that (the leading suit (if the player has it), the trump suit (if the player doesn't), or any card (if the player has neither))
+- Calculating which card wings the trick
+- Keeping score (how many tricks each team has won)
+- Ability to check the trick from the previous round
+- Login info and game data persistently stored in a database
+
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - 3 HTML pages (login, joining a lobby, and gameplay)
+- **CSS** - ability of the application to resize to different screen sizes, animations of playing a card, the cards themselves, etc
+- **React** - ability to check the cards of the last trick, displaying the lobby after login and gameplay after joining a lobby, backend endpoint calls (like login and updating the game state), the ability to switch out cards with the kitty if you win the bid, etc
+- **Service** - endpoints for registering, login, logout, joining a lobby, leaving a lobby, playing a card, etc. For third party, I'll display the weather from Weatherstack
+- **DB/Login** - persistently store user data and game data in the database, can't join a lobby unless authenticated
+- **WebSocket** - updating the game state for each user after game events, such as broadcasting the card played to each other player after a player takes their turn, or updating the score for each player after a trick is finished, possibly notifications to each player currently in the lobby when a new player joins the lobby, etc
 
 ## 🚀 Specification Deliverable
 
