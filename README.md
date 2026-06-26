@@ -19,13 +19,23 @@ Want to learn a fun new card game? Enjoy trick-taking games, but hate keeping tr
 
 ![Design image](startup_sketch.jpg)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Here's a sequence diagram showing how the game is updated after a player takes their turn
 
 ```mermaid
 sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
+    actor Bob
+    actor Joe
+    actor Phil
+    actor George
+    Bob->>Server: five of diamonds
+    Server-->>Joe: five of diamonds
+    Server-->>Phil: five of diamonds
+    Server-->>George: five of diamonds
+    Joe->>Server: ace of diamonds
+    Server-->>Bob: ace of diamonds
+    Server-->>Phil: ace of diamonds
+    Server-->>George: ace of diamonds
+
 ```
 
 ### Key features
