@@ -28,26 +28,28 @@
             <table>
                 <tbody>
                     <tr>
-                        <th>(empty)</th>
+                        <th>[Scores for both teams]</th> <!-- This will be updated by websocket-->
                         <th>North Player's Cards</th>
-                        <th>Trump Suit Displayed</th>
+                        <th>[Trump Suit Displayed]</th>
                     </tr>
 
                     <tr>
                         <th>West Player's Cards</th>
-                        <th>(cards of current trick)</th>
+                        <th>(cards of current trick)</th> <!-- This will be updated by websocket-->
                         <th>East Player's Cards</th>
                     </tr>
 
                     <tr>
-                        <th>(empty)</th>
+                        <!-- I set aside much more room for the player's own cards because you can see the front side of the 
+                         card, and thus need enough room to actually display them all -->
+                        <th>(Your Cards)</th>
                         <th>Your Cards</th>
-                        <th>(empty)</th>
+                        <th>(Your cards)</th>
                     </tr>
                 </tbody>
             </table>
 
-            <!-- This won't be a table at the end, has the placeholder for the 3rd party API call-->
+            <!-- This eventually won't be a table, has the placeholder for the 3rd party API call-->
             <table>
                 <tr>
                     <td><h2>Summon the Dragon</h2></td>

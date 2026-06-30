@@ -88,16 +88,16 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **HTML pages** - I created 5 HTML pages (index.html for logging in, lobby.html to join a game, play.html to play, scores.html to see user statistics, and about.html)
+- [x] **Proper HTML element usage** - I used Head, Body, Nav, Header, Main, and Footer tags for each as requested.
+- [x] **Links** - Each page contains links to each other page
+- [x] **Text** - Where applicable, added intructive text to clarify how to proceed towards playing a game
+- [x] **3rd party API placeholder** - I added a placeholder for a 3rd party call to a weather service
+- [x] **Images** - I added an image
+- [x] **Login placeholder** - I added a placeholder for login in index.html
+- [x] **DB data placeholder** - I added a placeholder for db access in scores.html.
+- [x] **WebSocket placeholder** - Many elements of play.html will depend on websocket updates, I noted several examples in HTML comments.
 
 ## 🚀 CSS deliverable
 
