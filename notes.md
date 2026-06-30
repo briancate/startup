@@ -19,6 +19,8 @@ Interesting things I have learned about AWS
 
 Interesting things I have learned about HTML
 
+It was really cool going through the MasteryLS course and I'm excited to work with it, but procrastinated way too much to take extensive notes.
+
 ## React
 
 Interesting things I have learned about React
