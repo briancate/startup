@@ -82,7 +82,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [x] **Rented EC2 server** - I rented a EC2 Nano.
 - [x] **Leased domain name** - I leased briancate.click
-- [x] **Server accessible** from my domain: [https://briancate.click]
+- [x] **Server accessible** from my domain: [https://briancate.click](https://briancate.click)
 
 ## 🚀 HTML deliverable
 
