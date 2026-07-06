@@ -26,6 +26,7 @@ It was really cool going through the MasteryLS course and I'm excited to work wi
 
 Where: 
     - ideally in a separate .css file, <link rel="stylesheet" href="styles.css"> (inside <head>)
+    - but also maybe not, if you use frameworks?
 
 General Format:
     - body {
@@ -46,9 +47,10 @@ Combinations examples (for selectors)
     - p.summary (all paragraphs with a summary)
 
 Animation: 
+    - examples:
     - animation-name (it's a name lol)
-    - animation-duration (3s, )
-    - animation-iteration-count (infinite, )
+    - animation-duration (3s)
+    - animation-iteration-count (infinite)
     - @keyframes (name) {
         to {opacity: 0;}
         50% {opacity: 1;}
@@ -57,7 +59,7 @@ Animation:
 
 Apparently use the "viewport" tag if you don't want the browser to scale?
 
-Use flex and grid to make the page responsive and to divide the page into sections (definitely using grid for the gameplay page)
+Use flex and grid to make the page responsive and to divide the page into sections (definitely going to need that for the gameplay page)
 
 ## React
 
