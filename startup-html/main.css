@@ -4,6 +4,13 @@ body {
   display: flex;
   flex-direction: column;
   min-width: 375px;
+
+  background-image: url("dragon_red_black.jfif");
+  background-size: cover;        /* Fill the screen */
+  background-position: center;   /* Center the image */
+  background-repeat: no-repeat;  /* Don't tile */
+  background-attachment: fixed;  /* Optional: fixed while scrolling */
+  min-height: 100vh;
 }
 
 /* 0 means it doesn't grow with browser size, 80px means it's always 80 pixels tall */
