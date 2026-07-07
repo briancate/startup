@@ -16,7 +16,9 @@
         />
 
         <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="play.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster:wght@400&display=swap">
+
     </head>
     
     <body class="bg-dark text-light">
@@ -34,44 +36,73 @@
         </header>
 
         <main>
-            <!-- All of this will need lots of attention during the CSS and JavaScript portion of the project-->
-            <table>
-                <tbody>
-                    <tr>
-                        <th>[Scores for both teams]</th> <!-- This will be updated by websocket-->
-                        <th>North Player's Cards</th>
-                        <th>[Trump Suit Displayed]</th>
-                    </tr>
+            <div class="grid_area">
+                <section class="top-left">1</section>
+                <section class="north-player">
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                </section>
+                <section class="top-right">3</section>
+                <section class="west-player">
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                </section>
+                <section class="center">Center</section>
+                <section class="east-player">
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                    <div class="card back"></div>
+                </section>
 
-                    <tr>
-                        <th>West Player's Cards</th>
-                        <th>(cards of current trick)</th> <!-- This will be updated by websocket-->
-                        <th>East Player's Cards</th>
-                    </tr>
-
-                    <tr>
-                        <!-- I set aside much more room for the player's own cards because you can see the front side of the 
-                         card, and thus need enough room to actually display them all -->
-                        <th>(Your Cards)</th>
-                        <th>Your Cards</th>
-                        <th>(Your cards)</th>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- This eventually won't be a table, has the placeholder for the 3rd party API call-->
-            <table>
-                <tr>
-                    <td><h2>Summon the Dragon</h2></td>
-                    <td>[Placeholder for Weather]</td>
-                </tr>
-            </table>
+                <section class="south-player">
+                    <div class="card clubs">
+                        <div class="rank">8</div>
+                        <div class="suit">♣</div>
+                    </div>
+                    <div class="card diamonds">
+                        <div class="rank">4</div>
+                        <div class="suit">♦</div>
+                    </div>
+                    <div class="card spades">
+                        <div class="rank">4</div>
+                        <div class="suit">♠</div>
+                    </div>
+                    <div class="card hearts">
+                        <div class="rank">3</div>
+                        <div class="suit">♥</div>
+                    </div>
+                    <div class="card hearts">
+                        <div class="rank">2</div>
+                        <div class="suit">♥</div>
+                    </div>
+                </section>
+            </div>
         </main>
 
         <footer>
-            <hr />
             <span class="text-reset">Brian Cate</span>
-            <br />
             <a href="https://github.com/briancate/startup">Github</a>
         </footer>
     </body>
