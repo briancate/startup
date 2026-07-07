@@ -48,6 +48,13 @@ footer a {
   float: right;
 }
 
+.input-group {
+    width: 50%;
+    margin: auto;
+}
+
+
+
 /* This hides the header and footer if the browser is too small */
 @media (max-height: 600px) {
   header {
