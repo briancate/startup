@@ -1,8 +1,13 @@
 /* This will be for the gameplay page */
-.grid_area {
+.play-area {
+
   display: grid;
   width: 75vw;
   height: 75vh;
+
+  /* width: clamp(96px, 75vw, 70px);    
+  height: clamp(96px, 75vw, 70px);     */
+
 
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: 1fr 3fr 1fr;
@@ -14,18 +19,19 @@
     grid-column: 1 / 4;
 }
 
-.north-player .card {
-    margin-left: -50px;
-}
+/* .north-player .card {
+    margin-left: -5rem;
+} */
 
 .east-player, .west-player {
     display: flex;
     flex-direction: column;
-    padding-bottom: 10vh;
+    /* padding-bottom: 10vh; */
     
     .card {
         transform: rotate(90deg);
-        margin-bottom: -13vh;
+        margin-bottom: -2.2rem;
+        /* margin-bottom: -13vh; */
     }
 }
 
@@ -41,12 +47,19 @@ body {
   height: 100%;
 }
 
+header {
+    flex: 0 0 auto;
+}
+
 main {
   background-color: transparent;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .card {
-    width: 5vw;
+    /* width: 5vw; */
+    width: clamp(48px, 8vw, 70px);    
     aspect-ratio: 24 / 35;
     background: white;
     border: 2px solid #d0d0d0;
@@ -74,4 +87,16 @@ main {
 
 .hearts, .diamonds {
     color: red;
+}
+
+@media (max-height: 600px) {
+  header {
+    display: none;
+  }
+  footer {
+    display: none;
+  }
+  main {
+    flex: 1 1 auto;
+  }
 }

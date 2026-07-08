@@ -16,12 +16,13 @@
         />
 
         <link rel="stylesheet" href="main.css" />
+        <link rel="stylesheet" href="lobby.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster:wght@400&display=swap">
     </head>
     
     <body class="bg-dark text-light">
         <header class="container-fluid">
-            <nav class="navbar fixed-top navbar-dark">
+            <nav class="navbar navbar-dark">
                 <a class="navbar-brand" href="#">Summon the Dragon<sup>&reg;</sup></a> <!-- the '#' takes you to the top of the page -->
                 <menu class="navbar-nav">
                     <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li> <!-- idk why they added "active" here-->
@@ -35,19 +36,19 @@
 
         <main>
             <div>To start a game, please join a lobby</div>
-            <div>
+            <div class="lobby-holder">
                 <span>Lobby 1</span>
                 <span>3/4 Players</span>
                 <button type="join lobby">Join</button>
             </div>
             
-            <div>
+            <div class="lobby-holder">
                 <span>Lobby 2</span>
                 <span>1/4 Players</span>
                 <button type="join lobby">Join</button>
             </div>
 
-            <div>
+            <div class="lobby-holder">
                 <span>Lobby 3</span>
                 <span>4/4 Players</span>
                 <button disabled type="join lobby">Full</button>

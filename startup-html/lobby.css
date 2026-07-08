@@ -1,1 +1,8 @@
 /* This will be for the lobby page */
+
+.lobby-holder {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-around;
+}
