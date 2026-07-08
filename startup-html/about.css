@@ -1,2 +1,8 @@
 /* This will be for the about page */
 
+#picture img {
+    float: left;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+    width: 150px;
+}

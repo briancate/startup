@@ -5,34 +5,10 @@
   width: 75vw;
   height: 75vh;
 
-  /* width: clamp(96px, 75vw, 70px);    
-  height: clamp(96px, 75vw, 70px);     */
-
-
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: 1fr 3fr 1fr;
 
   background-color: black;
-}
-
-.south-player {
-    grid-column: 1 / 4;
-}
-
-/* .north-player .card {
-    margin-left: -5rem;
-} */
-
-.east-player, .west-player {
-    display: flex;
-    flex-direction: column;
-    /* padding-bottom: 10vh; */
-    
-    .card {
-        transform: rotate(90deg);
-        margin-bottom: -2.2rem;
-        /* margin-bottom: -13vh; */
-    }
 }
 
 div section {
@@ -73,12 +49,11 @@ main {
     gap: 1vw;
 
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: bold;   
 }
 
-.back {
-    background: darkblue;
-    border: 2px solid white;
+.card:hover {
+    border: 4px solid yellow;
 }
 
 .clubs, .spades {

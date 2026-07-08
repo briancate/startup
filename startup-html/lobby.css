@@ -6,4 +6,7 @@
     align-items: center;
 
     justify-content: space-around;
+    border: 4px solid #ffffff;
+    margin-bottom: -4px;
+
 }
