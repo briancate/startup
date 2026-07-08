@@ -1,5 +1,5 @@
 /* This will be for the gameplay page */
-div section {
+.game-area-section {
   border: 1px solid #ccc;
   display: flex;
   justify-content: center;

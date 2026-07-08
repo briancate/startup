@@ -2,4 +2,22 @@
 
 table {
     overflow-x: auto;
+    font-size: 1.5rem;
+    padding: 0.5rem;
 }
+
+tr:nth-child(odd) {
+    background-color: rgb(153, 0, 0);
+}
+
+tr:nth-child(even) {
+    background-color: black;
+}
+
+th {
+    background-color: black;
+}
+
+/* .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: red;
+} */

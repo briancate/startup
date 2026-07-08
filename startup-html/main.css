@@ -67,7 +67,7 @@ footer a {
 }
 
 /* This hides the header and footer if the browser is too small */
-@media (max-height: 400px) and (max-width: 300px) {
+@media (max-height: 500px) and (max-width: 400px) {
   header {
     display: none;
   }
