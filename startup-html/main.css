@@ -31,7 +31,7 @@ main {
   /* flex-basis: calc(100vh - 10px); */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
 
   max-width: 700px;
   margin: 1rem auto;
@@ -39,10 +39,9 @@ main {
   border-radius: 15px;
   padding: 2rem;
 
-  button {
-    align-items: normal;
-  }
+  
 }
+
   
 
 /* main > div {
@@ -85,7 +84,7 @@ footer a {
 }
 
 /* This hides the header and footer if the browser is too small */
-@media (max-height: 600px) {
+@media (max-height: 400px) {
   header {
     display: none;
   }
@@ -94,5 +93,6 @@ footer a {
   }
   main {
     flex: 1 100vh;
+    margin: 0;
   }
 }
