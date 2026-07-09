@@ -46,7 +46,7 @@ export default function App() {
         </header>
 
         <Routes>
-          <Route path='/' element={<Login />} exact />
+          <Route path='/' element={<Login />} />
           <Route path='/lobby' element={<Lobby />} />
           <Route path='/play' element={<Play />} />
           <Route path='/scores' element={<Scores />} />
@@ -55,7 +55,7 @@ export default function App() {
         </Routes>
 
         <footer>
-          <span class="text-reset">Brian Cate</span>
+          <span className="text-reset">Brian Cate</span>
           <a href="https://github.com/briancate/startup">Github</a>
         </footer>
       </div>
