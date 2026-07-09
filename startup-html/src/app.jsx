@@ -17,7 +17,7 @@ export default function App() {
             <div className="navbar-brand">Summon the Dragon<sup>&reg;</sup></div>
             <menu className="navbar-nav">
               <li className="nav-item">
-                <NavLink className="nav-link" to="">
+                <NavLink className="nav-link" to="/">
                   Home
                 </NavLink>
               </li>
