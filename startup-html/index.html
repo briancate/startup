@@ -1,64 +1,16 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <!-- Tell browsers not to scale the viewport automatically -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Summon the Dragon HTML</title>
-        <link rel="icon" href="favicon.ico" /> <!-- I need to make a favicon at some point, I guess, or ask Dr Smith to use his-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon_dragon.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
 
-        <!-- Include bootstrap CSS framework -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-            crossorigin="anonymous"
-        />
-
-        <link rel="stylesheet" href="main.css" />
-
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster:wght@400&display=swap">
-    </head>
-    
-    <body class="bg-dark text-light">
-        <header class="container-fluid">
-            <nav class="navbar navbar-dark">
-                <a class="navbar-brand" href="#">Summon the Dragon<sup>&reg;</sup></a> <!-- the '#' takes you to the top of the page -->
-                <menu class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li> <!-- idk why they added "active" here-->
-                    <li class="nav-item"><a class="nav-link" href="lobby.html">Lobby</a></li>
-                    <li class="nav-item"><a class="nav-link" href="play.html">Play</a></li>
-                    <li class="nav-item"><a class="nav-link" href="scores.html">Scores</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-                </menu>
-            </nav>
-        </header>
-
-        <main>
-            <!-- <div> -->
-                <h1>Welcome to Summon the Dragon</h1>
-                <p>Please login or create an account to continue</p>
-                <!-- Placeholder for login, backend endpoint calls -->
-                <form method="get" action="play.html">
-                    <div class="input-group mb-3 w-50 mx-auto">
-                        <span class="input-group-text">Username: </span>
-                        <input class="form-control" type="text" placeholder="your username here" />
-                    </div>
-                    <div class="input-group mb-3 w-50 mx-auto">
-                        <span class="input-group-text">Password: </span>
-                        <input class="form-control" type="password" placeholder="your password here" />
-                    </div>
-                    <div class="text-center">
-                        <button class="btn btn-dark" type="submit">Login</button>
-                        <button class="btn btn-light" type="submit">Create</button>
-                    </div>
-                </form>
-            <!-- </div> -->
-        </main>
-
-        <footer>
-            <span class="text-reset">Brian Cate</span> <!--Here idk why they choose the name "text-reset", but if it works for them it works for me-->
-            <a href="https://github.com/briancate/startup">Github</a>
-        </footer>
-    </body>
+    <title>Summon the Dragon</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/index.jsx"></script>
+  </body>
 </html>
