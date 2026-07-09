@@ -115,10 +115,10 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **Bundled using Vite** - I did this, idk what else to say
+- [x] **Components** - my old HTML files are gone and new React components have taken their places
+- [x] **Router** - I set up a functional router
 
 ## 🚀 React part 2: Reactivity deliverable
 
