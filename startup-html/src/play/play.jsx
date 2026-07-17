@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './play.css';
 import { createDeck, shuffleDeck, dealCards, SUITS, RANKS } from './deck';
+import { saveGameResult } from '../gameHistory';
 
 
 const PLAYERS = ['South', 'West', 'North', 'East'];
@@ -76,6 +77,8 @@ function dealNewGame() {
     trickWinner: null,
     team1Score: 0,
     team2Score: 0,
+    gameOver: false,
+    saved: false,
   };
 }
 
@@ -137,16 +140,21 @@ export function Play() {
   }, []);
 
 
-  // Briefly show the completed trick, then let the winner lead the next one.
+  // Briefly show the completed trick, then let the winner lead the next one
+  // (or end the game if every hand is now empty).
   useEffect(() => {
     if (!game.trickWinner) return;
     const timer = setTimeout(() => {
-      setGame((prev) => ({
-        ...prev,
-        trick: { cards: {}, leadSuit: null },
-        currentPlayer: prev.trickWinner,
-        trickWinner: null,
-      }));
+      setGame((prev) => {
+        const roundOver = Object.values(prev.hands).every((hand) => hand.length === 0);
+        return {
+          ...prev,
+          trick: { cards: {}, leadSuit: null },
+          currentPlayer: prev.trickWinner,
+          trickWinner: null,
+          gameOver: roundOver,
+        };
+      });
     }, 1200);
     return () => clearTimeout(timer);
   }, [game.trickWinner]);
@@ -154,7 +162,7 @@ export function Play() {
 
   // Auto-play for West/North/East on their turn.
   useEffect(() => {
-    if (game.trickWinner || game.currentPlayer === 'South') return;
+    if (game.gameOver || game.trickWinner || game.currentPlayer === 'South') return;
     const hand = game.hands[game.currentPlayer];
     if (hand.length === 0) return;
     const timer = setTimeout(() => {
@@ -162,18 +170,33 @@ export function Play() {
       playCard(game.currentPlayer, card);
     }, 700);
     return () => clearTimeout(timer);
-  }, [game.currentPlayer, game.trickWinner, game.hands, game.trick.leadSuit, game.trumpSuit, playCard]);
+  }, [game.currentPlayer, game.trickWinner, game.gameOver, game.hands, game.trick.leadSuit, game.trumpSuit, playCard]);
 
 
-  const canPlaySouth = game.currentPlayer === 'South' && !game.trickWinner;
+  // Record the final score exactly once when a game ends.
+  useEffect(() => {
+    if (game.gameOver && !game.saved) {
+      saveGameResult(game.team1Score, game.team2Score);
+      setGame((prev) => ({ ...prev, saved: true }));
+    }
+  }, [game.gameOver, game.saved, game.team1Score, game.team2Score]);
+
+
+  const canPlaySouth = game.currentPlayer === 'South' && !game.trickWinner && !game.gameOver;
   const legalSouthCards = canPlaySouth ? legalCards(game.hands.South, game.trick.leadSuit, game.trumpSuit) : [];
 
 
-  const turnLabel = game.trickWinner
+  const turnLabel = game.gameOver
+    ? 'Game over!'
+    : game.trickWinner
     ? `${game.trickWinner} wins the trick!`
     : game.currentPlayer === 'South'
     ? 'Your turn'
     : `${game.currentPlayer} is playing...`;
+
+
+  const winningTeamLabel =
+    game.team1Score === game.team2Score ? 'Tie game' : game.team1Score > game.team2Score ? 'Team 1' : 'Team 2';
 
 
   return (
@@ -216,10 +239,23 @@ export function Play() {
             );
           })}
         </section>
+
+
+        {game.gameOver && (
+          <div className="game-over">
+            <p>
+              {winningTeamLabel === 'Tie game' ? 'Tie game!' : `${winningTeamLabel} wins the game!`}{' '}
+              ({game.team1Score} - {game.team2Score})
+            </p>
+            <button onClick={() => setGame(dealNewGame())}>Start New Game</button>
+          </div>
+        )}
       </div>
     </main>
   );
 }
+
+
 
 
 
