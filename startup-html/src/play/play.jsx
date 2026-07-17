@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './play.css';
+import { createDeck, shuffleDeck, dealCards } from './deck';
+
+const PLAYERS = ['South', 'West', 'North', 'East'];
 
 export function Play() {
+  // Shuffle and deal once when the component mounts, rather than on every render.
+  const hands = useMemo(() => {
+    const deck = shuffleDeck(createDeck());
+    return dealCards(deck, PLAYERS.length);
+  }, []);
+
+  const southHand = hands[PLAYERS.indexOf('South')];
+
   return (
     <main>
       <div id="info-area">
@@ -40,26 +51,12 @@ export function Play() {
         </section>
 
         <section className="south-player game-area-section">
-          <div className="card clubs">
-            <div className="rank">8</div>
-            <div className="suit">♣</div>
-          </div>
-          <div className="card diamonds">
-            <div className="rank">4</div>
-            <div className="suit">♦</div>
-          </div>
-          <div className="card spades">
-            <div className="rank">A</div>
-            <div className="suit">♠</div>
-          </div>
-          <div className="card hearts">
-            <div className="rank">Q</div>
-            <div className="suit">♥</div>
-          </div>
-          <div className="card hearts">
-            <div className="rank">2</div>
-            <div className="suit">♥</div>
-          </div>
+          {southHand.map((card, i) => (
+            <div className={`card ${card.suit}`} key={i}>
+              <div className="rank">{card.rank}</div>
+              <div className="suit">{card.suitSymbol}</div>
+            </div>
+          ))}
         </section>
       </div>
     </main>
