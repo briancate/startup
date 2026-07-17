@@ -7,7 +7,7 @@ import { AuthState } from './login/authState';
 import { Play } from './play/play';
 import { Scores } from './scores/scores';
 import { About } from './about/about';
-import { Lobby } from './lobby/lobby';
+// import { Lobby } from './lobby/lobby';
 
 export default function App() {
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
@@ -26,11 +26,11 @@ export default function App() {
                   Login
                 </NavLink>
               </li>
-              {authState === AuthState.Authenticated && (<li className="nav-item">
+              {/* {authState === AuthState.Authenticated && (<li className="nav-item">
                 <NavLink className="nav-link" to="lobby">
                   Lobby
                 </NavLink>
-              </li>)}
+              </li>)} */}
               {authState === AuthState.Authenticated && (<li className="nav-item">
                 <NavLink className="nav-link" to="play">
                   Play
@@ -60,7 +60,7 @@ export default function App() {
                 setUserName(userName);
               }} 
             />} />
-          <Route path='/lobby' element={<Lobby />} />
+          {/* <Route path='/lobby' element={<Lobby />} /> */}
           <Route path='/play' element={<Play />} />
           <Route path='/scores' element={<Scores />} />
           <Route path='/about' element={<About />} />
