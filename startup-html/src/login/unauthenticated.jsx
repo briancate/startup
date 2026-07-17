@@ -21,12 +21,13 @@ export function Unauthenticated(props) {
   return (
     <>
       <div>
+        <p>Please login or create an account to continue</p>
         <div className='input-group mb-3'>
-          <span className='input-group-text'>@</span>
+          <span className='input-group-text'>Username</span>
           <input className='form-control' type='text' value={userName} onChange={(e) => setUserName(e.target.value)} placeholder='your@email.com' />
         </div>
         <div className='input-group mb-3'>
-          <span className='input-group-text'>🔒</span>
+          <span className='input-group-text'>Password</span>
           <input className='form-control' type='password' onChange={(e) => setPassword(e.target.value)} placeholder='password' />
         </div>
         <Button variant='primary' onClick={() => loginUser()} disabled={!userName || !password}>

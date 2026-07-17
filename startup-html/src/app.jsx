@@ -14,7 +14,6 @@ export default function App() {
   const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
 
-
   return (
     <BrowserRouter>
       <div className="body bg-dark text-light">
@@ -52,7 +51,15 @@ export default function App() {
         </header>
 
         <Routes>
-          <Route path='/' element={<Login />} />
+          <Route path='/' element={
+            <Login
+              userName = {userName}
+              authState = {authState}
+              onAuthChange = {(userName, authState) => {
+                setAuthState(authState);
+                setUserName(userName);
+              }} 
+            />} />
           <Route path='/lobby' element={<Lobby />} />
           <Route path='/play' element={<Play />} />
           <Route path='/scores' element={<Scores />} />
