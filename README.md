@@ -124,9 +124,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **All functionality implemented or mocked out** - Many of the rules aren't perfectly obeyed, but figure it was good enough for now
+- [x] **Hooks** - I used a number of useEffect hooks.
 
 ## 🚀 Service deliverable
 
