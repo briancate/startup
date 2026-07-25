@@ -176,11 +176,21 @@ export function Play() {
   // Record the final score exactly once when a game ends.
   useEffect(() => {
     if (game.gameOver && !game.saved) {
-      saveGameResult(game.team1Score, game.team2Score);
+      // saveGameResult(game.team1Score, game.team2Score);
       setGame((prev) => ({ ...prev, saved: true }));
     }
   }, [game.gameOver, game.saved, game.team1Score, game.team2Score]);
 
+
+  async function saveScore(team1Score, team2Score) {
+    const newScore = {team1Score, team2Score};
+
+    await fetch('/api/score', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(newScore),
+    });
+  }
 
   const canPlaySouth = game.currentPlayer === 'South' && !game.trickWinner && !game.gameOver;
   const legalSouthCards = canPlaySouth ? legalCards(game.hands.South, game.trick.leadSuit, game.trumpSuit) : [];
