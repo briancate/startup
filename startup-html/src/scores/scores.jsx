@@ -3,7 +3,38 @@ import './scores.css';
 import { getGameHistory } from '../gameHistory';
 
 export function Scores() {
-  const history = getGameHistory();
+
+  const [scores, setScores] = React.useState([]);
+
+  // Demonstrates calling a service asynchronously so that
+  // React can properly update state objects with the results.
+  React.useEffect(() => {
+    fetch('/api/scores')
+      .then((response) => response.json())
+      .then((scores) => {
+        setScores(scores);
+      });
+  }, []);
+
+  // Demonstrates rendering an array with React
+  const scoreRows = [];
+  if (scores.length) {
+    for (const [i, score] of scores.entries()) {
+      scoreRows.push(
+        <tr key={i}>
+          <td>{i}</td>
+          <td>{score.team1Score}</td>
+          <td>{score.team2Score}</td>
+        </tr>
+      );
+    }
+  } else {
+    scoreRows.push(
+      <tr key='0'>
+        <td colSpan='4'>No games played yet</td>
+      </tr>
+    );
+  }
 
   return (
     <main>
@@ -15,7 +46,8 @@ export function Scores() {
             <th>Team 2 Score</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id='scores'>{scoreRows}</tbody>
+        {/* <tbody>   // LEAVING THIS COMMENTED OUT ON PURPOSE, trying to follow Simon's pattern but keeping this just in case
           {history.length === 0 ? (
             <tr>
               <td colSpan="3">No games played yet</td>
@@ -29,7 +61,7 @@ export function Scores() {
               </tr>
             ))
           )}
-        </tbody>
+        </tbody> */}
       </table>
     </main>
   );
