@@ -1,6 +1,6 @@
 import React from 'react';
 import './scores.css';
-import { getGameHistory } from '../gameHistory';
+// import { getGameHistory } from '../gameHistory';
 
 export function Scores() {
 
@@ -47,21 +47,6 @@ export function Scores() {
           </tr>
         </thead>
         <tbody id='scores'>{scoreRows}</tbody>
-        {/* <tbody>   // LEAVING THIS COMMENTED OUT ON PURPOSE, trying to follow Simon's pattern but keeping this just in case
-          {history.length === 0 ? (
-            <tr>
-              <td colSpan="3">No games played yet</td>
-            </tr>
-          ) : (
-            history.map((entry) => (
-              <tr key={entry.game}>
-                <td>{entry.game}</td>
-                <td>{entry.team1Score}</td>
-                <td>{entry.team2Score}</td>
-              </tr>
-            ))
-          )}
-        </tbody> */}
       </table>
     </main>
   );

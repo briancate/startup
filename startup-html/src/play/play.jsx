@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './play.css';
 import { createDeck, shuffleDeck, dealCards, SUITS, RANKS } from './deck';
-import { saveGameResult } from '../gameHistory';
+// import { saveGameResult } from '../gameHistory';
 
 
 const PLAYERS = ['South', 'West', 'North', 'East'];
@@ -176,7 +176,6 @@ export function Play() {
   // Record the final score exactly once when a game ends.
   useEffect(() => {
     if (game.gameOver && !game.saved) {
-      // saveGameResult(game.team1Score, game.team2Score);
       saveScore(game.team1Score, game.team2Score);
       setGame((prev) => ({ ...prev, saved: true }));
     }

@@ -95,18 +95,6 @@ app.use((_req, res) => {
 
 // updateScores considers a new score for inclusion in the high scores.
 function updateScores(newScore) {
-//   let found = false;
-//   for (const [i, prevScore] of scores.entries()) {
-//     if (newScore.score > prevScore.score) {
-//       scores.splice(i, 0, newScore);
-//       found = true;
-//       break;
-//     }
-//   }
-
-//   if (!found) {
-//     scores.push(newScore);
-//   }
 
   scores.push(newScore);
 

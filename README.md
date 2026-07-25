@@ -132,14 +132,14 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
-- [ ] **Uses BCrypt to hash passwords** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **Node.js/Express HTTP service** - I used Express, following Simon as a model
+- [x] **Static middleware for frontend** - I included middleware, again following Simon
+- [x] **Calls to third party endpoints** - I added an API call to get a random cat fact to the about section of my application
+- [x] **Backend service endpoints** - added endpoints for authentication and the application 
+- [x] **Frontend calls service endpoints** - I modified my frontend to call backend service endpoints, mostly in play.jsx, scores.jsx, and unauthenticated.jsx
+- [x] **Supports registration, login, logout, and restricted endpoint** - It fully supports login, logout, and scores requires an auth token
+- [x] **Uses BCrypt to hash passwords** - Done
 
 ## 🚀 DB deliverable
 
