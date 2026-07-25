@@ -6,7 +6,7 @@ import { saveGameResult } from '../gameHistory';
 
 const PLAYERS = ['South', 'West', 'North', 'East'];
 const ROTATION = ['West', 'North', 'East', 'South'];
-const SUIT_ORDER = SUITS.map((suit) => suit.name);
+const SUIT_ORDER = SUITS.map((suit) => suit.name); // Equivalent to ['clubs', 'diamonds', 'spades', 'hearts'], idk about the order though
 
 
 function sortHand(hand) {
@@ -257,5 +257,5 @@ export function Play() {
 
 
 
-
-
+// have directions (north, south, etc) be an innumerable (enum?), add const player = Object.freeze = South : "south", North : "north" etc
+// replace each time it's referenced
