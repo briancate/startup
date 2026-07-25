@@ -177,6 +177,7 @@ export function Play() {
   useEffect(() => {
     if (game.gameOver && !game.saved) {
       // saveGameResult(game.team1Score, game.team2Score);
+      saveScore(game.team1Score, game.team2Score);
       setGame((prev) => ({ ...prev, saved: true }));
     }
   }, [game.gameOver, game.saved, game.team1Score, game.team2Score]);

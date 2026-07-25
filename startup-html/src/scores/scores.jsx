@@ -21,8 +21,8 @@ export function Scores() {
   if (scores.length) {
     for (const [i, score] of scores.entries()) {
       scoreRows.push(
-        <tr key={i}>
-          <td>{i}</td>
+        <tr key={i+1}>
+          <td>{i+1}</td>
           <td>{score.team1Score}</td>
           <td>{score.team2Score}</td>
         </tr>
