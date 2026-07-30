@@ -93,7 +93,7 @@ app.use((req, res) => {
 });
 
 // updateScores considers a new score for inclusion in the high scores.
-function updateScores(newScore) {
+async function updateScores(newScore) {
   await DB.addScore(newScore);
   return DB.getHighScores();
 }

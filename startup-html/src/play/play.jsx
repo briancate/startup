@@ -183,8 +183,8 @@ export function Play() {
   }, [game.gameOver, game.saved, game.team1Score, game.team2Score]);
 
 
-  async function saveScore(team1Score, team2Score) {
-    const newScore = {team1Score, team2Score};
+  async function saveScore(team1Score, team2Score, higherScore) {
+    const newScore = {team1Score, team2Score, higherScore};
 
     await fetch('/api/score', {
       method: 'POST',
