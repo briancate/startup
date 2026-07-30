@@ -145,9 +145,13 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **Stores data in MongoDB** - I store the scores for the moment, I might add game state for the WebSocket deliverable.
+- [x] **Stores credentials in MongoDB** - I followed Simon's model (since I'm using Simon's authorization system)
+- I still need to move some of the logic from the frontend (like creating the game and dealing hands) to the backend, but I figured that if I can't currently host
+  multiple lobbies (and don't plan on doing so for this class), saving the game state so people can resume a game later seems unnecessary, the only advantage
+  would be the ability for someone to leave and rejoin a game, but I might just kill the game if that happens or say they're out for good and it plays a random
+  card for them, so I don't currently think I need to store that data in the database (given that I don't plan on ever pulling it out).
 
 ## 🚀 WebSocket deliverable
 
