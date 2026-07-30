@@ -176,7 +176,8 @@ export function Play() {
   // Record the final score exactly once when a game ends.
   useEffect(() => {
     if (game.gameOver && !game.saved) {
-      saveScore(game.team1Score, game.team2Score);
+      const higherScore = (game.team1Score > game.team2Score) ? game.team1Score : game.team2Score;
+      saveScore(game.team1Score, game.team2Score, higherScore);
       setGame((prev) => ({ ...prev, saved: true }));
     }
   }, [game.gameOver, game.saved, game.team1Score, game.team2Score]);
