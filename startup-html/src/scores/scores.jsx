@@ -10,17 +10,19 @@ export function Scores() {
   // React can properly update state objects with the results.
   React.useEffect(() => {
     fetch('/api/scores')
-      .then((response) => response.json())
-      .then((scores) => {
-        setScores(scores);
-      });
+      .then((response) => {
+        if (!response.ok) throw new Error('Failed to load scores'); 
+        return response.json();
+      })
+      .then((scores) => {setScores(scores)})
+      .catch((err) => console.error(err));
   }, []);
 
   // Demonstrates rendering an array with React
   const scoreRows = [];
   if (scores.length) {
     for (const [i, score] of scores.entries()) {
-      if (score == null) {continue;}
+      if (score == null) continue;
       scoreRows.push(
         <tr key={i+1}>
           <td>{i+1}</td>
