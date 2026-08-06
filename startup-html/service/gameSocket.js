@@ -1,48 +1,60 @@
 const { WebSocketServer, WebSocket } = require('ws');
 const { PLAYERS, createGame, applyPlayCard, applyAiCard, clearTrick, legalCards } = require('./gameEngine');
 
-// Only South is human-controlled for now; every connected client is treated as that seat.
-// Real per-player seating comes with proper multiplayer sessions.
-const HUMAN_PLAYER = 'South';
 const TRICK_DISPLAY_MS = 1200;
 const AI_MOVE_MS = 700;
 
-// Strips the other players' hands down to a card count so a client never sees hidden cards.
-function sanitizeForClient(state) {
+// Builds the per-client view of the game. A client with a seat is a player and only ever
+// sees its own hand; everyone else (and any seat with no connected socket) is AI/observer-visible only.
+function sanitizeForClient(state, seats, observerCount, socket) {
+  const payload = {
+    type: 'state',
+    role: socket.seat ? 'player' : 'observer',
+    seat: socket.seat || null,
+    seats: PLAYERS.reduce((acc, player) => {
+      acc[player] = { connected: !!seats[player] };
+      return acc;
+    }, {}),
+    observerCount,
+    started: state !== null,
+  };
+  if (!state) return payload;
+
   const { hands, ...publicState } = state;
   const handCounts = {};
   PLAYERS.forEach((player) => {
     handCounts[player] = hands[player].length;
   });
 
-  const canPlay = !state.gameOver && !state.trickWinner && state.currentPlayer === HUMAN_PLAYER;
-  const legalPlays = canPlay ? legalCards(hands[HUMAN_PLAYER], state.trick.leadSuit, state.trumpSuit.name) : [];
+  const mySeat = socket.seat;
+  const hand = mySeat ? hands[mySeat] : [];
+  const canPlay = !!mySeat && !state.gameOver && !state.trickWinner && state.currentPlayer === mySeat;
+  const legalPlays = canPlay ? legalCards(hand, state.trick.leadSuit, state.trumpSuit.name) : [];
 
-  return { ...publicState, hand: hands[HUMAN_PLAYER], handCounts, legalCards: legalPlays };
+  return { ...payload, ...publicState, hand, handCounts, legalCards: legalPlays };
 }
 
 function gameSocket(httpServer) {
   const socketServer = new WebSocketServer({ server: httpServer });
-  let state = createGame();
+  // Tracks which socket, if any, is seated at each of the four named seats.
+  // A seat with no connected socket is played by the AI.
+  const seats = { South: null, West: null, North: null, East: null };
+  let state = null;
   let pendingTimer = null;
 
   function broadcast() {
-    const message = JSON.stringify({ type: 'state', state: sanitizeForClient(state) });
+    const observerCount = [...socketServer.clients].filter((client) => !client.seat).length;
     socketServer.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) client.send(message);
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify(sanitizeForClient(state, seats, observerCount, client)));
+      }
     });
   }
 
-  function sendTo(socket) {
-    if (socket.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify({ type: 'state', state: sanitizeForClient(state) }));
-    }
-  }
-
-  // Advances the game on its own: clears a shown trick, or plays the next AI card.
+  // Advances the game on its own: clears a shown trick, or plays the next AI/vacant-seat card.
   function scheduleNext() {
     clearTimeout(pendingTimer);
-    if (state.gameOver) return;
+    if (!state || state.gameOver) return;
 
     if (state.trickWinner) {
       pendingTimer = setTimeout(() => {
@@ -53,7 +65,8 @@ function gameSocket(httpServer) {
       return;
     }
 
-    if (state.currentPlayer !== HUMAN_PLAYER && state.hands[state.currentPlayer].length > 0) {
+    const seatIsAi = !seats[state.currentPlayer];
+    if (seatIsAi && state.hands[state.currentPlayer].length > 0) {
       pendingTimer = setTimeout(() => {
         state = applyAiCard(state);
         broadcast();
@@ -62,9 +75,21 @@ function gameSocket(httpServer) {
     }
   }
 
+  function startGame() {
+    if (state && !state.gameOver) return;
+    clearTimeout(pendingTimer);
+    state = createGame();
+    broadcast();
+    scheduleNext();
+  }
+
   socketServer.on('connection', (socket) => {
     socket.isAlive = true;
-    sendTo(socket);
+    // The first four connected clients take the open seats and become players;
+    // everyone after that is an observer.
+    socket.seat = PLAYERS.find((player) => !seats[player]) || null;
+    if (socket.seat) seats[socket.seat] = socket;
+    broadcast();
 
     socket.on('message', (data) => {
       let message;
@@ -74,16 +99,22 @@ function gameSocket(httpServer) {
         return;
       }
 
-      if (message.type === 'playCard' && message.card) {
-        state = applyPlayCard(state, HUMAN_PLAYER, message.card);
+      if (message.type === 'playCard' && message.card && socket.seat && state) {
+        state = applyPlayCard(state, socket.seat, message.card);
         broadcast();
         scheduleNext();
-      } else if (message.type === 'newGame') {
-        clearTimeout(pendingTimer);
-        state = createGame();
-        broadcast();
-        scheduleNext();
+      } else if (message.type === 'startGame') {
+        startGame();
       }
+    });
+
+    socket.on('close', () => {
+      if (socket.seat && seats[socket.seat] === socket) {
+        // The seat is now vacant, so the AI takes over playing it.
+        seats[socket.seat] = null;
+      }
+      broadcast();
+      scheduleNext();
     });
 
     socket.on('pong', () => {
@@ -99,8 +130,6 @@ function gameSocket(httpServer) {
       client.ping();
     });
   }, 10000);
-
-  scheduleNext();
 }
 
 module.exports = { gameSocket };
