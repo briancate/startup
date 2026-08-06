@@ -1,87 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './play.css';
-import { createDeck, shuffleDeck, dealCards, SUITS, RANKS } from './deck';
+import { connectToGame } from './gameSocket';
 // import { saveGameResult } from '../gameHistory';
 
-
-const PLAYERS = ['South', 'West', 'North', 'East'];
-const ROTATION = ['West', 'North', 'East', 'South'];
-const SUIT_ORDER = SUITS.map((suit) => suit.name); // Equivalent to ['clubs', 'diamonds', 'spades', 'hearts'], idk about the order though
-
-
-function sortHand(hand) {
-  return [...hand].sort((a, b) => {
-    const suitDiff = SUIT_ORDER.indexOf(a.suit) - SUIT_ORDER.indexOf(b.suit);
-    if (suitDiff !== 0) return suitDiff;
-    return RANKS.indexOf(a.rank) - RANKS.indexOf(b.rank);
-  });
+function isSameCard(a, b) {
+  return a.suit === b.suit && a.rank === b.rank;
 }
-
-
-function randomCard(hand) {
-  return hand[Math.floor(Math.random() * hand.length)];
-}
-
-
-function nextPlayer(player) {
-  return ROTATION[(ROTATION.indexOf(player) + 1) % ROTATION.length];
-}
-
-
-function teamOf(player) {
-  return player === 'West' || player === 'East' ? 1 : 2;
-}
-
-
-// Cards a player is allowed to play: follow the lead suit if they can,
-// otherwise trump if they have it, otherwise anything.
-function legalCards(hand, leadSuit, trumpSuit) {
-  if (!leadSuit) return hand;
-  const followSuit = hand.filter((c) => c.suit === leadSuit);
-  if (followSuit.length > 0) return followSuit;
-  const trumpCards = hand.filter((c) => c.suit === trumpSuit);
-  if (trumpCards.length > 0) return trumpCards;
-  return hand;
-}
-
-
-function chooseAiCard(hand, leadSuit, trumpSuit) {
-  return randomCard(legalCards(hand, leadSuit, trumpSuit));
-}
-
-
-// Highest trump played wins the trick; if no trump was played, highest card of the lead suit wins.
-function getTrickWinner(trickCards, leadSuit, trumpSuit) {
-  const entries = Object.entries(trickCards);
-  const trumpEntries = entries.filter(([, card]) => card.suit === trumpSuit);
-  const contest = trumpEntries.length > 0 ? trumpEntries : entries.filter(([, card]) => card.suit === leadSuit);
-  return contest.reduce((best, entry) => (RANKS.indexOf(entry[1].rank) > RANKS.indexOf(best[1].rank) ? entry : best))[0];
-}
-
-
-function dealNewGame() {
-  const deck = shuffleDeck(createDeck());
-  const dealt = dealCards(deck, PLAYERS.length);
-  const hands = {};
-  PLAYERS.forEach((player, i) => {
-    hands[player] = dealt[i];
-  });
-  hands.South = sortHand(hands.South);
-
-
-  return {
-    hands,
-    trumpSuit: SUITS[Math.floor(Math.random() * SUITS.length)],
-    trick: { cards: {}, leadSuit: null },
-    currentPlayer: ROTATION[Math.floor(Math.random() * ROTATION.length)],
-    trickWinner: null,
-    team1Score: 0,
-    team2Score: 0,
-    gameOver: false,
-    saved: false,
-  };
-}
-
 
 function Card({ card, className = '', ...props }) {
   return (
@@ -91,7 +15,6 @@ function Card({ card, className = '', ...props }) {
     </div>
   );
 }
-
 
 function TrickSlot({ card }) {
   if (!card) {
@@ -105,86 +28,36 @@ function TrickSlot({ card }) {
   return <Card card={card} />;
 }
 
-
 export function Play() {
-  const [game, setGame] = useState(dealNewGame);
+  const [state, setState] = useState(null);
+  const connectionRef = useRef(null);
+  const savedRef = useRef(false);
 
-
-  const playCard = useCallback((player, card) => {
-    setGame((prev) => {
-      if (prev.trickWinner || prev.currentPlayer !== player) return prev;
-
-
-      const hands = { ...prev.hands, [player]: prev.hands[player].filter((c) => c !== card) };
-      const isLead = Object.keys(prev.trick.cards).length === 0;
-      const leadSuit = isLead ? card.suit : prev.trick.leadSuit;
-      const cards = { ...prev.trick.cards, [player]: card };
-
-
-      if (Object.keys(cards).length < ROTATION.length) {
-        return { ...prev, hands, trick: { cards, leadSuit }, currentPlayer: nextPlayer(player) };
-      }
-
-
-      const winner = getTrickWinner(cards, leadSuit, prev.trumpSuit);
-      const team = teamOf(winner);
-      return {
-        ...prev,
-        hands,
-        trick: { cards, leadSuit },
-        trickWinner: winner,
-        team1Score: prev.team1Score + (team === 1 ? 1 : 0),
-        team2Score: prev.team2Score + (team === 2 ? 1 : 0),
-      };
+  useEffect(() => {
+    const connection = connectToGame();
+    connectionRef.current = connection;
+    connection.onMessage((message) => {
+      if (message.type === 'state') setState(message.state);
     });
+    return () => connection.close();
   }, []);
-
-
-  // Briefly show the completed trick, then let the winner lead the next one
-  // (or end the game if every hand is now empty).
-  useEffect(() => {
-    if (!game.trickWinner) return;
-    const timer = setTimeout(() => {
-      setGame((prev) => {
-        const roundOver = Object.values(prev.hands).every((hand) => hand.length === 0);
-        return {
-          ...prev,
-          trick: { cards: {}, leadSuit: null },
-          currentPlayer: prev.trickWinner,
-          trickWinner: null,
-          gameOver: roundOver,
-        };
-      });
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, [game.trickWinner]);
-
-
-  // Auto-play for West/North/East on their turn.
-  useEffect(() => {
-    if (game.gameOver || game.trickWinner || game.currentPlayer === 'South') return;
-    const hand = game.hands[game.currentPlayer];
-    if (hand.length === 0) return;
-    const timer = setTimeout(() => {
-      const card = chooseAiCard(hand, game.trick.leadSuit, game.trumpSuit);
-      playCard(game.currentPlayer, card);
-    }, 700);
-    return () => clearTimeout(timer);
-  }, [game.currentPlayer, game.trickWinner, game.gameOver, game.hands, game.trick.leadSuit, game.trumpSuit, playCard]);
-
 
   // Record the final score exactly once when a game ends.
   useEffect(() => {
-    if (game.gameOver && !game.saved) {
-      const higherScore = (game.team1Score > game.team2Score) ? game.team1Score : game.team2Score;
-      saveScore(game.team1Score, game.team2Score, higherScore);
-      setGame((prev) => ({ ...prev, saved: true }));
+    if (!state) return;
+    if (!state.gameOver) {
+      savedRef.current = false;
+      return;
     }
-  }, [game.gameOver, game.saved, game.team1Score, game.team2Score]);
+    if (savedRef.current) return;
+    savedRef.current = true;
 
+    const higherScore = state.team1Score > state.team2Score ? state.team1Score : state.team2Score;
+    saveScore(state.team1Score, state.team2Score, higherScore);
+  }, [state]);
 
   async function saveScore(team1Score, team2Score, higherScore) {
-    const newScore = {team1Score, team2Score, higherScore};
+    const newScore = { team1Score, team2Score, higherScore };
 
     await fetch('/api/score', {
       method: 'POST',
@@ -193,80 +66,87 @@ export function Play() {
     });
   }
 
-  const canPlaySouth = game.currentPlayer === 'South' && !game.trickWinner && !game.gameOver;
-  const legalSouthCards = canPlaySouth ? legalCards(game.hands.South, game.trick.leadSuit, game.trumpSuit) : [];
+  function playCard(card) {
+    connectionRef.current.send('playCard', { card: { suit: card.suit, rank: card.rank } });
+  }
 
+  function newGame() {
+    connectionRef.current.send('newGame', {});
+  }
 
-  const turnLabel = game.gameOver
+  if (!state) {
+    return (
+      <main>
+        <div id="info-area">
+          <p>Connecting to game...</p>
+        </div>
+      </main>
+    );
+  }
+
+  const isSouthLegal = (card) => state.legalCards.some((legal) => isSameCard(legal, card));
+
+  const turnLabel = state.gameOver
     ? 'Game over!'
-    : game.trickWinner
-    ? `${game.trickWinner} wins the trick!`
-    : game.currentPlayer === 'South'
+    : state.trickWinner
+    ? `${state.trickWinner} wins the trick!`
+    : state.currentPlayer === 'South'
     ? 'Your turn'
-    : `${game.currentPlayer} is playing...`;
-
+    : `${state.currentPlayer} is playing...`;
 
   const winningTeamLabel =
-    game.team1Score === game.team2Score ? 'Tie game' : game.team1Score > game.team2Score ? 'Team 1' : 'Team 2';
-
+    state.team1Score === state.team2Score ? 'Tie game' : state.team1Score > state.team2Score ? 'Team 1' : 'Team 2';
 
   return (
     <main>
       <div id="info-area">
-          <p>Trump Suit: {game.trumpSuit.symbol}</p>
-          <p>{turnLabel}</p>
-          <p>Team 1 Score: {game.team1Score}</p>
-          <p>Team 2 Score: {game.team2Score}</p>
+        <p>Trump Suit: {state.trumpSuit.symbol}</p>
+        <p>{turnLabel}</p>
+        <p>Team 1 Score: {state.team1Score}</p>
+        <p>Team 2 Score: {state.team2Score}</p>
       </div>
       <div id="play-area">
         <section className="game-area-section">
           <div>
-            <TrickSlot card={game.trick.cards.West} />
+            <TrickSlot card={state.trick.cards.West} />
           </div>
           <div>
             <div>
-              <TrickSlot card={game.trick.cards.North} />
+              <TrickSlot card={state.trick.cards.North} />
             </div>
             <div>
-              <TrickSlot card={game.trick.cards.South} />
+              <TrickSlot card={state.trick.cards.South} />
             </div>
           </div>
           <div>
-            <TrickSlot card={game.trick.cards.East} />
+            <TrickSlot card={state.trick.cards.East} />
           </div>
         </section>
 
-
         <section className="south-player game-area-section">
-          {game.hands.South.map((card, i) => {
-            const isLegal = legalSouthCards.includes(card);
+          {state.hand.map((card, i) => {
+            const isLegal = isSouthLegal(card);
             return (
               <Card
                 card={card}
                 key={i}
                 className={isLegal ? '' : 'disabled'}
-                onClick={isLegal ? () => playCard('South', card) : undefined}
+                onClick={isLegal ? () => playCard(card) : undefined}
               />
             );
           })}
         </section>
 
-
-        {game.gameOver && (
+        {state.gameOver && (
           <div className="game-over">
             <p>
               {winningTeamLabel === 'Tie game' ? 'Tie game!' : `${winningTeamLabel} wins the game!`}{' '}
-              ({game.team1Score} - {game.team2Score})
+              ({state.team1Score} - {state.team2Score})
             </p>
-            <button onClick={() => setGame(dealNewGame())}>Start New Game</button>
+            <button onClick={newGame}>Start New Game</button>
           </div>
         )}
       </div>
     </main>
   );
 }
-
-
-
-// have directions (north, south, etc) be an innumerable (enum?), add const player = Object.freeze = South : "south", North : "north" etc
-// replace each time it's referenced
