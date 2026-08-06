@@ -87,9 +87,8 @@ function createGame() {
   const dealt = dealCards(deck, PLAYERS.length);
   const hands = {};
   PLAYERS.forEach((player, i) => {
-    hands[player] = dealt[i];
+    hands[player] = sortHand(dealt[i]);
   });
-  hands.South = sortHand(hands.South);
 
   return {
     hands,

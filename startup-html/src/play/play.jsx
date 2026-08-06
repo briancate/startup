@@ -88,6 +88,7 @@ export function Play() {
 
   const isObserver = state.role === 'observer';
   const mySeatLabel = isObserver ? 'You are observing this game' : `You are seated: ${state.seat}`;
+  const displayName = (seat) => (state.seats[seat] && state.seats[seat].name) || seat;
 
   if (!state.started) {
     return (
@@ -102,7 +103,7 @@ export function Play() {
               <ul>
                 {SEATS.map((seat) => (
                   <li key={seat}>
-                    {seat}: {state.seats[seat].connected ? 'Player connected' : 'Open (AI will play)'}
+                    {seat}: {state.seats[seat].connected ? state.seats[seat].name || 'Player connected' : 'Open (AI will play)'}
                     {seat === state.seat ? ' (you)' : ''}
                   </li>
                 ))}
@@ -121,10 +122,10 @@ export function Play() {
   const turnLabel = state.gameOver
     ? 'Game over!'
     : state.trickWinner
-    ? `${state.trickWinner} wins the trick!`
+    ? `${displayName(state.trickWinner)} wins the trick!`
     : state.currentPlayer === state.seat
     ? 'Your turn'
-    : `${state.currentPlayer} is playing...`;
+    : `${displayName(state.currentPlayer)} is playing...`;
 
   const winningTeamLabel =
     state.team1Score === state.team2Score ? 'Tie game' : state.team1Score > state.team2Score ? 'Team 1' : 'Team 2';
