@@ -25,6 +25,14 @@ main {
   font-size: clamp(14px, 3vw, 32px);
 }
 
+/* #play-area is a flex item of main (column direction). Without min-width: 0
+   its default auto minimum size would grow to fit the unscrolled hand of
+   cards, stretching main (and the whole page) wider instead of letting the
+   hand scroll within its own fixed-width box. */
+#play-area {
+    min-width: 0;
+}
+
 #info-area {
     display: flex;
     flex-direction: row;
@@ -97,6 +105,12 @@ main {
 @media (max-width: 480px) {
   .game-area-section {
     padding: 0.75rem;
+  }
+
+  /* Stack the trump/turn/score stats one per line instead of wrapping
+     unevenly across the row. */
+  #info-area {
+    flex-direction: column;
   }
 
   #info-area p {

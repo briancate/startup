@@ -11,6 +11,10 @@ html {
   display: flex;
   flex-direction: column;
   min-width: 375px;
+  /* Backstop: no descendant should ever be able to force a page-wide horizontal
+     scrollbar. Any content wider than its box (e.g. an unscrolled card hand)
+     should scroll locally within that box instead. */
+  overflow-x: hidden;
 
   background-image: url("dragon_red_black.jfif");
   background-size: cover;        /* Fill the screen */
@@ -38,12 +42,18 @@ main {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  /* Flex items default to min-width: auto, which lets an oversized child
+     (e.g. a card hand wider than the box) stretch this element instead of
+     scrolling within it. Pin it to 0 so max-width below is actually honored. */
+  min-width: 0;
 
   max-width: 700px;
+  width: 100%;
   margin: 1rem auto;
   background-color: rgba(170,170,170,0.80);
   border-radius: 15px;
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 footer {
