@@ -157,9 +157,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **Backend listens for WebSocket connection** - I moved the game logic to the backend, and updates happen by the client sending information via WebSocket
+- [x] **Frontend makes WebSocket connection** - The frontend establishes a WebSocket connection and communicates with the backend
+- [x] **Data sent over WebSocket connection** - When a player plays a card, the client sends that data to the server. The server then sends an updated version of the game state to each client.
+- [x] **WebSocket data displayed** - Each card played by another player being displayed is data received from WebSocket
+- [x] **Application is fully functional** - While I didn't implement everything (like the lobbies, or bidding to determine trump), everything is fully functional, you can play the game.
