@@ -1,5 +1,12 @@
 /* This will be for the index.html page, maybe everything draws from this? */
 
+/* rem is relative to this, so shrinking it on narrow screens scales every
+   Bootstrap component (buttons, inputs, navbar spacing) along with our own
+   rem-based sizes, without having to touch each page's CSS individually. */
+html {
+  font-size: 16px;
+}
+
 .body {
   display: flex;
   flex-direction: column;
@@ -46,8 +53,10 @@ footer {
 menu {
   flex: 1;
   display: flex;
-  /*  overwrite Bootstrap so the menu does not wrap */
+  /*  overwrite Bootstrap so the menu items lay out left-to-right */
   flex-direction: row !important;
+  flex-wrap: wrap;
+  row-gap: 0.25rem;
   list-style: none;
 }
 
@@ -77,5 +86,36 @@ footer a {
   main {
     flex: 1 100vh;
     margin: 0;
+  }
+}
+
+/* Phone-width screens: shrink both the rem root (spacing/Bootstrap components)
+   and the decorative body font (headings/prose) so the header and page content
+   fit without overflowing sideways. */
+@media (max-width: 480px) {
+  html {
+    font-size: 15px;
+  }
+  .body {
+    font-size: 22px;
+  }
+  main {
+    padding: 1.25rem;
+    margin: 0.5rem auto;
+  }
+}
+
+@media (max-width: 380px) {
+  html {
+    font-size: 14px;
+  }
+  .body {
+    font-size: 19px;
+  }
+  main {
+    padding: 1rem;
+  }
+  menu .nav-item {
+    padding: 0 0.2em;
   }
 }

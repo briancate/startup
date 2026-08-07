@@ -18,6 +18,13 @@ th {
     background-color: black;
 }
 
+@media (max-width: 480px) {
+    table {
+        font-size: 1.1rem;
+        padding: 0.25rem;
+    }
+}
+
 /* .table-striped > tbody > tr:nth-of-type(odd) > * {
   background-color: red;
 } */
